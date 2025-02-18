@@ -46,6 +46,10 @@ def extract_api():
         return jsonify({"error": "Failed to extract values"}), 500
     
     return jsonify({"epoch": e, "sha256": s})
-
+    
+# Route untuk pengalihan sederhana
+@web_app.route('/')
+def home():
+    return "Selamat datang di fake website! Ini halaman utama."
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
