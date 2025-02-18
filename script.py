@@ -12,7 +12,7 @@ def js(url, file="link.chunk.js"):
         with open(file, "w", encoding="utf-8") as f:
             f.write(res.text)
         return file
-    except requests.RequestException as e:
+    except requests.RequestException:
         return None
 
 def crack(file):
@@ -29,9 +29,7 @@ def extract(out):
 
 @app.route("/extract", methods=["GET"])
 def extract_api():
-    url = request.args.get("url")
-    if not url:
-        return jsonify({"error": "URL parameter is required"}), 400
+    url = request.args.get("url", "https://ummy.net/js/link.chunk.js")
     
     file = js(url)
     if not file:
@@ -46,10 +44,10 @@ def extract_api():
         return jsonify({"error": "Failed to extract values"}), 500
     
     return jsonify({"epoch": e, "sha256": s})
-    
-# Route untuk pengalihan sederhana
-@web_app.route('/')
+
+@app.route('/')
 def home():
     return "Selamat datang di fake website! Ini halaman utama."
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
