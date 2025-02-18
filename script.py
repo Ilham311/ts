@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 def js(url, file="link.chunk.js"):
     try:
-        res = requests.get(url, timeout=10)
+        res = requests.get(url, timeout=30)
         res.raise_for_status()
         with open(file, "w", encoding="utf-8") as f:
             f.write(res.text)
